@@ -20,4 +20,6 @@ along with go-utils.  If not, see <http://www.gnu.org/licenses/>.
 
 package canvas
 
+// Instead of using the Pageview type,
+// we might just want to consider using a map[string]interface{}
 type Pageview map[string]interface{}
