@@ -18,29 +18,8 @@ You should have received a copy of the GNU Affero General Public License
 along with go-utils.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-package canvas
+package api
 
-import (
-	"math"
-	"testing"
-	"time"
-)
-
-func TestConvDateTime(t *testing.T) {
-	tolerance, err := time.ParseDuration("1s")
-	if err != nil {
-		t.Error(err)
-	}
-
-	now := time.Now()
-	nowFrm := now.Format(TimeFmt)
-	nowParse, err := time.Parse(TimeFmt, nowFrm)
-	if err != nil {
-		t.Error(err)
-	}
-
-	diff := math.Abs(nowParse.Sub(now).Seconds())
-	if diff > tolerance.Seconds() {
-		t.Error(now, " != ", nowParse)
-	}
-}
+// Instead of using the Pageview type,
+// we might just want to consider using a map[string]interface{}
+type Pageview map[string]interface{}

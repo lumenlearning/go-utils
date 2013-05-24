@@ -18,8 +18,42 @@ You should have received a copy of the GNU Affero General Public License
 along with go-utils.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-package canvas
+package html
 
-// Instead of using the Pageview type,
-// we might just want to consider using a map[string]interface{}
-type Pageview map[string]interface{}
+import (
+	"sync"
+	"code.google.com/p/go-html-transform/h5"
+	gnhtml "code.google.com/p/go.net/html"
+)
+
+func GetNodeText(n *gnhtml.Node) string {
+	nodeTree := h5.NewTree(n)
+	
+	texts := make(chan string)
+	wg := sync.WaitGroup{}
+	finalString := ""
+	
+	wg.Add(1)
+	go func () {
+		nodeTree.Walk(func (c *gnhtml.Node) {
+			if c.Type == gnhtml.TextNode {
+				texts <- c.Data
+			}
+		})
+		
+		close(texts)
+		wg.Done()
+	}()
+
+	wg.Add(1)
+	go func () {
+		for t := range texts {
+			finalString += t
+		}
+
+		wg.Done()
+	}()
+	
+	wg.Wait()
+	return finalString
+}

@@ -18,7 +18,7 @@ You should have received a copy of the GNU Affero General Public License
 along with go-utils.  If not, see <http://www.gnu.org/licenses/>.
 *****************************************************************************/
 
-package canvas
+package api
 
 import (
 	"bufio"
@@ -58,35 +58,6 @@ func AuthorizedCall(url, auth string, cln *http.Client) (*http.Response, error) 
 
 	// Return the http.Response object.
 	return resp, nil
-}
-
-func ReadResponse(resp *http.Response) (*[]byte, error) {
-	contentLength := resp.ContentLength
-
-	body := []byte(nil)
-	if contentLength > 0 {
-		body = make([]byte, contentLength)
-		resp.Body.Read(body)
-	} else {
-		bio := bufio.NewReader(resp.Body)
-		buf := make([]byte, 4096)
-
-		for {
-			n, err := bio.Read(buf)
-			if n > 0 {
-				body = append(body, buf[0:n]...)
-			}
-			if err != nil {
-				if err == io.EOF {
-					break
-				} else {
-					return nil, err
-				}
-			}
-		}
-	}
-
-	return &body, nil
 }
 
 func GetObjFromJSON(data *[]byte) (*interface{}, error) {
