@@ -21,9 +21,7 @@ along with go-utils.  If not, see <http://www.gnu.org/licenses/>.
 package api
 
 import (
-	"bufio"
 	"encoding/json"
-	"io"
 	"net/http"
 	"regexp"
 	"strings"
