@@ -21,13 +21,33 @@ along with go-utils.  If not, see <http://www.gnu.org/licenses/>.
 package html
 
 import (
+	"errors"
+	"fmt"
 	"sync"
-	"code.google.com/p/go-html-transform/h5"
+	ghtsel "code.google.com/p/go-html-transform/css/selector"
+	ghth5 "code.google.com/p/go-html-transform/h5"
 	gnhtml "code.google.com/p/go.net/html"
 )
 
+func FindNodes(html, cssSelector string) ([]*gnhtml.Node, error) {
+	// Create a parse tree of the HTML
+	tree, err := ghth5.NewFromString(html)
+	if err != nil {
+		return nil, errors.New(fmt.Sprintf("ghth5.NewFromString => %v", err.Error()))
+	}
+
+	// Create a selector chain
+	sel, err := ghtsel.Selector(cssSelector)
+	if err != nil {
+		return nil, errors.New(fmt.Sprintf("ghtsel.Selector => %v", err.Error()))
+	}
+
+	// Return the nodes that we found, if any.
+	return sel.Find(tree.Top()), nil
+}
+
 func GetNodeText(n *gnhtml.Node) string {
-	nodeTree := h5.NewTree(n)
+	nodeTree := ghth5.NewTree(n)
 	
 	texts := make(chan string)
 	wg := sync.WaitGroup{}
