@@ -25,11 +25,11 @@ import (
 	"time"
 )
 
-var ISO8601TimeFmt string = "2006-01-02T15:04:05-07:00"
-var UnixTimeFmt string = "2006-01-02 15:04:05"
+var ISO8601Full string = "2006-01-02T15:04:05-07:00"
+var ISO8601Basic string = "2006-01-02 15:04:05"
 
 func TimeFromISO8601 (dateTime string) (time.Time, error) {
-	t, err := time.Parse(ISO8601TimeFmt, dateTime)
+	t, err := time.Parse(ISO8601Full, dateTime)
 	if err != nil {
 		return time.Time{}, err
 	}
@@ -38,7 +38,7 @@ func TimeFromISO8601 (dateTime string) (time.Time, error) {
 }
 
 func TimeFromUnix (dateTime string) (time.Time, error) {
-	t, err := time.Parse(UnixTimeFmt, dateTime)
+	t, err := time.Parse(ISO8601Basic, dateTime)
 	if err != nil {
 		return time.Time{}, err
 	}
@@ -47,17 +47,17 @@ func TimeFromUnix (dateTime string) (time.Time, error) {
 }
 
 func UnixFromTime (t time.Time) (string, error) {
-	u := t.Format(UnixTimeFmt)
+	u := t.Format(ISO8601Basic)
 	if u == "" {
-		return "", errors.New("Unable to format as:"+UnixTimeFmt)
+		return "", errors.New("Unable to format as:"+ISO8601Basic)
 	}
 	return u, nil
 }
 
 func ISO8601FromTime (t time.Time) (string, error) {
-	i := t.Format(ISO8601TimeFmt)
+	i := t.Format(ISO8601Full)
 	if i == "" {
-		return "", errors.New("Unable to format as:"+UnixTimeFmt)
+		return "", errors.New("Unable to format as:"+ISO8601Basic)
 	}
 	return i, nil
 }
