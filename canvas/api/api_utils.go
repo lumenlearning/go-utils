@@ -25,7 +25,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
-	lmnHttp "lumenlearning.com/util/http"
+	lmnHttp "github.com/lumenlearning/go-utils/http"
 )
 
 func CallAPI(srv, api, auth string, cln *http.Client) (*http.Response, error) {

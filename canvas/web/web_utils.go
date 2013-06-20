@@ -29,7 +29,7 @@ import (
 	gnpublicsuffix "code.google.com/p/go.net/publicsuffix"
 	sel "code.google.com/p/go-html-transform/css/selector"
 	h5 "code.google.com/p/go-html-transform/h5"
-	lmnhttp "lumenlearning.com/util/http"
+	lmnhttp "github.com/lumenlearning/go-utils/http"
 )
 
 func CanvasWebLogin(username, password, login1, login2, useragent string) (*lmnhttp.UserAgentClient, error) {

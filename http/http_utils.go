@@ -30,7 +30,8 @@ import (
 )
 
 // Mainly created to support the use of the simultaneous use of the 
-//   lumenlearning.com/util/http/UserAgentClient and net/http/Client types.
+//   github.com/lumenlearning/go-utils/http/UserAgentClient and
+//   net/http/Client types.
 type Clientish interface {
 	Do(req *http.Request) (resp *http.Response, err error)
 	Get(url string) (resp *http.Response, err error)
