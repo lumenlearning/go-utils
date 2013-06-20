@@ -25,6 +25,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
+	lmnHttp "lumenlearning.com/util/http"
 )
 
 func CallAPI(srv, api, auth string, cln *http.Client) (*http.Response, error) {
@@ -34,10 +35,10 @@ func CallAPI(srv, api, auth string, cln *http.Client) (*http.Response, error) {
 	return AuthorizedCall(url, auth, cln)
 }
 
-func AuthorizedCall(url, auth string, cln *http.Client) (*http.Response, error) {
+func AuthorizedCall(url, auth string, cln lmnHttp.Clientish) (*http.Response, error) {
 	// Get an http.Client if one was not provided
 	if cln == nil {
-		cln = new(http.Client)
+		cln = &http.Client{}
 	}
 
 	// Get an http.Request object ready to go, and add
@@ -51,7 +52,7 @@ func AuthorizedCall(url, auth string, cln *http.Client) (*http.Response, error) 
 	// Make the request
 	resp, err := cln.Do(req)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
 
 	// Return the http.Response object.
