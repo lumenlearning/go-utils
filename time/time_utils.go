@@ -25,7 +25,10 @@ import (
 	"time"
 )
 
-var ISO8601Full string = "2006-01-02T15:04:05-07:00"
+// This was previously the time stamp returned by Canvas.
+// var ISO8601Full string = "2006-01-02T15:04:05-07:00"
+// Now it's this, at least as of 10/22/2013
+var ISO8601Full string = "2006-01-02T15:04:05Z"
 var ISO8601Basic string = "2006-01-02 15:04:05"
 
 func TimeFromISO8601Full (dateTime string) (time.Time, error) {
